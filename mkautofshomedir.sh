@@ -13,8 +13,8 @@ USERNAME="$PAM_USER"
 # Get umask, skeldir and preflightdirs parameters
 UMASK="${1:-$DEFAULT_UMASK}"
 SKELDIR="${2:-$DEFAULT_SKELDIR}"
-HOMEMODE="${2:-$DEFAULT_HOMEMODE}"
-PREFLIGHTDIRS=("${@:3}")
+HOMEMODE="${3:-$DEFAULT_HOMEMODE}"
+PREFLIGHTDIRS=("${@:4}")
 
 # Validate username
 if [ -z "$USERNAME" ] ; then
@@ -49,7 +49,7 @@ if [ ${#PREFLIGHTDIRS[@]} -gt 0 ] && [[ "$homedir" =~ ^/home/([^/]+)$ ]] ; then
 
 	for preflightdir in "${PREFLIGHTDIRS[@]}"; do
 		if [ ! -d "$preflightdir" ] ; then
-			echo "Warning Ignoring missing preflight home directory '$preflightdir'" >&2
+			echo "Warning: Ignoring missing preflight home directory '$preflightdir'" >&2
 		fi
 
 		realpreflightdir="$(realpath "$preflightdir")"
