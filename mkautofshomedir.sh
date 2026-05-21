@@ -92,7 +92,7 @@ if [ ${#PREFLIGHTDIRS[@]} -gt 0 ] && [[ "$homedir" =~ ^/home/([^/]+)$ ]] ; then
 		fi
 	done
 
-	if systemctl --no-pager status autofs.service > /dev/null 2>&1 && ! systemctl restart autofs.service ; then
+	if systemctl -q is-active autofs.service && ! systemctl restart autofs.service ; then
 		echo 'Error: Failed to restart autofs' >&2
 		exit 1
 	fi
@@ -141,7 +141,7 @@ if [ ${#PREFLIGHTDIRS[@]} -gt 0 ] && [[ "$homedir" =~ ^/home/([^/]+)$ ]] ; then
 		fi
 	done
 
-	if systemctl --no-pager status autofs.service > /dev/null 2>&1 && ! systemctl restart autofs.service ; then
+	if systemctl -q is-active autofs.service && ! systemctl restart autofs.service ; then
 		echo 'Error: Failed to restart autofs' >&2
 		exit 1
 	fi
