@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Default values
 DEFAULT_UMASK='0022'
@@ -8,7 +8,7 @@ DEFAULT_SKELDIR='/etc/skel'
 DEFAULT_HOMEMODE='0700'
 
 # Get username from PAM environment variable
-USERNAME="$PAM_USER"
+USERNAME="${PAM_USER:-}"
 
 # Get umask, skeldir and preflightdirs parameters
 UMASK="${1:-$DEFAULT_UMASK}"
@@ -23,7 +23,7 @@ if [ -z "$USERNAME" ] ; then
 fi
 
 # Check PAM_TYPE - only run during session phase
-if [ "$PAM_TYPE" != 'open_session' ] ; then
+if [ "${PAM_TYPE:-}" != 'open_session' ] ; then
 	# Silently exit if not in the correct PAM phase
 	exit 0
 fi
